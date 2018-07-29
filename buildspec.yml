@@ -5,6 +5,9 @@ phases:
     commands:
       - aws s3 rm s3://breakout.sbroadhurst.net --recursive
       - aws s3 cp . s3://breakout.sbroadhurst.net --recursive --acl public-read
+      - aws s3 rm s3://breakout.sbroadhurst.net/.git --recursive
+      - aws s3 rm s3://breakout.sbroadhurst.net/builtspec.yml
+      
 
 artifacts:
   files:
