@@ -1,0 +1,12 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - aws s3 rm s3://breakout --recursive
+      - aws s3 cp . s3://breakout --recursive --acl public-read
+
+artifacts:
+  files:
+    build/**/*
+  
