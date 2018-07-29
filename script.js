@@ -22,6 +22,8 @@ var brickOffsetLeft = 30
 var score = 0
 var snd1 = new Audio('Blip_Select11.m4a')
 var snd2 = new Audio('Blip_Select12.m4a')
+var paused = true
+var count = 0
 
 var bricks = []
 for (c = 0; c < brickColumnCount; c++) {
@@ -51,6 +53,7 @@ function drawBricks() {
     }
   }
 }
+
 function keyDownHandler(e) {
   if (e.key == 'ArrowRight' || e.key == 'd') {
     rightPressed = true
@@ -109,42 +112,69 @@ function drawScore() {
   ctx.fillText('Score:' + score, 8, 20)
 }
 
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
-  //draw ball
-  drawBall()
-  drawPaddle()
-  drawBricks()
-  collisionDetection()
-  drawScore()
-
-  //wall collision for y
-  if (y + dy < ballRadius) {
-    dy = -dy
-  } else if (y + dy > canvas.height - ballRadius) {
-    if (x > paddleX && x < paddleX + paddleWidth) {
-      snd2.play()
-      dy = -dy
-    } else {
-      alert('GAME OVER')
-      document.location.reload()
-    }
-  }
-  //wall collision for x
-  if (x + dx < 0 + ballRadius || x + dx > canvas.width - ballRadius) {
-    dx = -dx
-  }
-
-  if (rightPressed && paddleX < canvas.width - paddleWidth) {
-    paddleX += paddleDx
-  }
-
-  if (leftPressed && paddleX > 0) {
-    paddleX -= paddleDx
-  }
-
-  x += dx
-  y += dy
+function startButton() {
+  var btn = document.createElement('input')
+  btn.setAttribute('type', 'button')
+  btn.setAttribute('value', 'START / PAUSE GAME')
+  document.body.appendChild(btn)
+  btn.style.marginLeft = '470px'
+  btn.style.marginTop = '25px'
+  btn.onclick = unpause
+}
+function unpause() {
+  paused = !paused
 }
 
+function drawStartScreen() {
+  startButton()
+}
+
+if (paused && count === 0) {
+  count++
+  requestAnimationFrame(drawStartScreen)
+}
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  if (paused) {
+    clearInterval(draw)
+  }
+
+  //draw ball
+  else {
+    drawBall()
+    drawPaddle()
+    drawBricks()
+    collisionDetection()
+    drawScore()
+
+    //wall collision for y
+    if (y + dy < ballRadius) {
+      dy = -dy
+    } else if (y + dy > canvas.height - ballRadius) {
+      if (x > paddleX && x < paddleX + paddleWidth) {
+        snd2.play()
+        dy = -dy
+      } else {
+        alert('GAME OVER')
+        document.location.reload()
+      }
+    }
+    //wall collision for x
+    if (x + dx < 0 + ballRadius || x + dx > canvas.width - ballRadius) {
+      dx = -dx
+    }
+
+    if (rightPressed && paddleX < canvas.width - paddleWidth) {
+      paddleX += paddleDx
+    }
+
+    if (leftPressed && paddleX > 0) {
+      paddleX -= paddleDx
+    }
+
+    x += dx
+    y += dy
+  }
+}
 setInterval(draw, 10)
