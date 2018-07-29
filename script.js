@@ -23,7 +23,6 @@ var score = 0
 var snd1 = new Audio('Blip_Select11.m4a')
 var snd2 = new Audio('Blip_Select12.m4a')
 var paused = true
-var count = 0
 
 var bricks = []
 for (c = 0; c < brickColumnCount; c++) {
@@ -129,8 +128,7 @@ function drawStartScreen() {
   startButton()
 }
 
-if (paused && count === 0) {
-  count++
+if (paused) {
   requestAnimationFrame(drawStartScreen)
 }
 
