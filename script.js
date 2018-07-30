@@ -134,11 +134,10 @@ function drawScore() {
   ctx.fillText('Score:' + score, 10, 20)
 }
 
-function drawTime() {
-  time++
+function drawTime(time) {
   ctx.font = '16px Arial'
   ctx.fillStyle = 'blue'
-  ctx.fillText('Time:' + time + 's', 80, 20)
+  ctx.fillText('Time:' + Math.round(time) + 's', 80, 20)
 }
 
 function drawLevel() {
@@ -176,8 +175,7 @@ function drawStartScreen() {
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
   if (paused) {
-    requestAnimationFrame(drawStartScreen)
-    clearTimeout(draw)
+    drawStartScreen()
   } else {
     //draw ball
     drawBall()
@@ -187,7 +185,8 @@ function draw() {
     drawScore()
     drawLevel()
 
-    setTimeout(drawTime, 1000)
+    time++
+    drawTime(time / 60)
 
     //wall collision for y
     if (y + dy < ballRadius) {
@@ -218,5 +217,7 @@ function draw() {
     x += dx
     y += dy
   }
+
+  requestAnimationFrame(draw)
 }
-setInterval(draw, 10)
+requestAnimationFrame(draw)
