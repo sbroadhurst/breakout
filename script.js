@@ -1,7 +1,9 @@
 var canvas = document.getElementById('myCanvas')
 var ctx = canvas.getContext('2d')
 
-var x = canvas.width / 2
+var min = -200
+var max = 200
+var x = canvas.width / 2 + getRandomInt(min, max)
 var y = canvas.height - 30
 var dx = 2
 var dy = -2
@@ -20,15 +22,26 @@ var brickPadding = 10
 var brickOffsetTop = 30
 var brickOffsetLeft = 30
 var score = 0
+var time = 0
 var snd1 = new Audio('Blip_Select11.m4a')
 var snd2 = new Audio('Blip_Select12.m4a')
 var paused = true
+var level = 1
+var maxLevel = 5
+var count = 0
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
 
 var bricks = []
-for (c = 0; c < brickColumnCount; c++) {
-  bricks[c] = []
-  for (r = 0; r < brickRowCount; r++) {
-    bricks[c][r] = { x: 0, y: 0, status: 1 }
+makeBricks()
+function makeBricks() {
+  for (c = 0; c < brickColumnCount; c++) {
+    bricks[c] = []
+    for (r = 0; r < brickRowCount; r++) {
+      bricks[c][r] = { x: 0, y: 0, status: 1 }
+    }
   }
 }
 
@@ -97,11 +110,17 @@ function collisionDetection() {
           dy = -dy
           snd1.play()
           b.status = 0
-          score += 1
-          if (score == 2) {
-            // brickRowCount * brickColumnCount
-            alert('You win!')
-            document.location.reload()
+          score++
+          count++
+          if (count == brickRowCount * brickColumnCount) {
+            if (level === maxLevel) {
+              alert('You win, Congratulations!')
+              document.location.reload()
+            } else {
+              level++
+              count = 0
+              makeBricks()
+            }
           }
         }
       }
@@ -112,7 +131,20 @@ function collisionDetection() {
 function drawScore() {
   ctx.font = '16px Arial'
   ctx.fillStyle = 'blue'
-  ctx.fillText('Score:' + score, 8, 20)
+  ctx.fillText('Score:' + score, 10, 20)
+}
+
+function drawTime() {
+  time++
+  ctx.font = '16px Arial'
+  ctx.fillStyle = 'blue'
+  ctx.fillText('Time:' + time + 's', 80, 20)
+}
+
+function drawLevel() {
+  ctx.font = '16px Arial'
+  ctx.fillStyle = 'blue'
+  ctx.fillText('Level:' + level, 210, 20)
 }
 
 // function startButton() {
@@ -153,6 +185,9 @@ function draw() {
     drawBricks()
     collisionDetection()
     drawScore()
+    drawLevel()
+
+    setTimeout(drawTime, 1000)
 
     //wall collision for y
     if (y + dy < ballRadius) {
