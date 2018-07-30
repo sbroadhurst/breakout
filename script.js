@@ -56,6 +56,9 @@ function drawBricks() {
 function keyDownHandler(e) {
   if (e.key == 'ArrowRight' || e.key == 'd') {
     rightPressed = true
+  }
+  if (e.key == 'p') {
+    paused = !paused
   } else if (e.key == 'ArrowLeft' || e.key == 'a') {
     leftPressed = true
   }
@@ -95,7 +98,8 @@ function collisionDetection() {
           snd1.play()
           b.status = 0
           score += 1
-          if (score == brickRowCount * brickColumnCount) {
+          if (score == 2) {
+            // brickRowCount * brickColumnCount
             alert('You win!')
             document.location.reload()
           }
@@ -111,35 +115,39 @@ function drawScore() {
   ctx.fillText('Score:' + score, 8, 20)
 }
 
-function startButton() {
-  var btn = document.createElement('input')
-  btn.setAttribute('type', 'button')
-  btn.setAttribute('value', 'START / PAUSE GAME')
-  document.body.appendChild(btn)
-  btn.style.marginLeft = '470px'
-  btn.style.marginTop = '25px'
-  btn.onclick = unpause
-}
-function unpause() {
-  paused = !paused
-}
+// function startButton() {
+//   var btn = document.createElement('input')
+//   btn.setAttribute('type', 'button')
+//   btn.setAttribute('value', 'START / PAUSE GAME')
+//   document.body.appendChild(btn)
+//   btn.style.marginLeft = '45%'
+//   btn.style.marginTop = '25px'
+//   btn.onclick = unpause
+// }
+// function unpause() {
+//   window['paused'] = !paused
+// }
 
 function drawStartScreen() {
-  startButton()
-}
-
-if (paused) {
-  requestAnimationFrame(drawStartScreen)
+  ctx.beginPath()
+  ctx.rect(0, 0, canvas.width, canvas.height)
+  ctx.fillStyle = 'blue'
+  ctx.fill()
+  ctx.font = '50px Arial'
+  ctx.fillStyle = 'white'
+  ctx.fillText('Breakout!', 125, 150)
+  ctx.font = '20px Arial'
+  ctx.fillText('Press P to start or pause the game at anytime', 35, 190)
+  // startButton()
 }
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
   if (paused) {
-    clearInterval(draw)
-  }
-
-  //draw ball
-  else {
+    requestAnimationFrame(drawStartScreen)
+    clearTimeout(draw)
+  } else {
+    //draw ball
     drawBall()
     drawPaddle()
     drawBricks()
@@ -156,6 +164,7 @@ function draw() {
       } else {
         alert('GAME OVER')
         document.location.reload()
+        paused = !paused
       }
     }
     //wall collision for x
