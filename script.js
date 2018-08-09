@@ -191,11 +191,11 @@ function draw() {
     //wall collision for y
     if (y + dy < ballRadius) {
       dy = -dy
-    } else if (y + dy > canvas.height - ballRadius) {
+    } else if (y + dy > canvas.height - 2 * ballRadius) {
       if (x > paddleX && x < paddleX + paddleWidth) {
         snd2.play()
         dy = -dy
-      } else {
+      } else if (y + dy > canvas.height - ballRadius) {
         alert('GAME OVER')
         document.location.reload()
         paused = !paused
