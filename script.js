@@ -218,6 +218,7 @@ function draw() {
     //wall collision for y
     if (y + dy < ballRadius) {
       dy = -dy
+      snd1.play()
     } else if (y + dy > canvas.height - ballRadius) {
       if (x > paddleX && x < paddleX + paddleWidth) {
         snd2.play()
@@ -229,6 +230,7 @@ function draw() {
     //wall collision for x
     if (x + dx < 0 + ballRadius || x + dx > canvas.width - ballRadius) {
       dx = -dx
+      snd1.play()
     }
 
     if (rightPressed && paddleX < canvas.width - paddleWidth) {
