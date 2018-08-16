@@ -5,8 +5,8 @@ var min = -200
 var max = 200
 var x = canvas.width / 2 + getRandomInt(min, max)
 var y = canvas.height - 30
-var dx = 2
-var dy = -2
+var dx = 3
+var dy = -3
 var ballRadius = 10
 var paddleHeight = 10
 var paddleWidth = 75
@@ -26,9 +26,11 @@ var time = 0
 var snd1 = new Audio('Blip_Select11.m4a')
 var snd2 = new Audio('Blip_Select12.m4a')
 var paused = true
+var gameEnd = false
 var level = 1
 var maxLevel = 5
 var count = 0
+const colors = ['red', 'yellow', 'green', 'pink', 'orange', 'purple', 'white']
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
@@ -58,7 +60,7 @@ function drawBricks() {
         bricks[c][r].y = brickY
         ctx.beginPath()
         ctx.rect(brickX, brickY, brickWidth, brickHeight)
-        ctx.fillStyle = 'blue'
+        ctx.fillStyle = colors[r]
         ctx.fill()
         ctx.closePath()
       }
@@ -70,7 +72,7 @@ function keyDownHandler(e) {
   if (e.key == 'ArrowRight' || e.key == 'd') {
     rightPressed = true
   }
-  if (e.key == 'p') {
+  if (e.code == 'Enter') {
     paused = !paused
   } else if (e.key == 'ArrowLeft' || e.key == 'a') {
     leftPressed = true
@@ -112,14 +114,20 @@ function collisionDetection() {
           b.status = 0
           score++
           count++
-          if (count == brickRowCount * brickColumnCount) {
+          if (count == brickColumnCount * brickRowCount) {
             if (level === maxLevel) {
-              alert('You win, Congratulations!')
-              document.location.reload()
+              gameEnd = true
             } else {
               level++
+              brickRowCount++
               count = 0
               makeBricks()
+              dx += 2
+              dy = Math.abs(dy) * -1
+              dy -= 2
+              x = canvas.width / 2 + getRandomInt(min, max)
+              y = canvas.height - 30
+              paddleX = (canvas.width - paddleWidth) / 2
             }
           }
         }
@@ -168,14 +176,33 @@ function drawStartScreen() {
   ctx.fillStyle = 'white'
   ctx.fillText('Breakout!', 125, 150)
   ctx.font = '20px Arial'
-  ctx.fillText('Press P to start or pause the game at anytime', 35, 190)
+  ctx.fillText('Press Enter to start or pause the game', 35, 190)
+
   // startButton()
+}
+
+function drawGameEndScreen() {
+  ctx.beginPath()
+  ctx.rect(0, 0, canvas.width, canvas.height)
+  ctx.fillStyle = 'blue'
+  ctx.fill()
+  ctx.font = '50px Arial'
+  ctx.fillStyle = 'white'
+  ctx.fillText('Game End', 125, 150)
+  ctx.font = '20px Arial'
+  ctx.fillText('Final Score = ' + (10 * score - Math.round(time / 60)), 35, 190)
+  // startButton()
+  setTimeout(function() {
+    document.location.reload()
+  }, 5000)
 }
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
   if (paused) {
     drawStartScreen()
+  } else if (gameEnd) {
+    drawGameEndScreen()
   } else {
     //draw ball
     drawBall()
@@ -191,14 +218,12 @@ function draw() {
     //wall collision for y
     if (y + dy < ballRadius) {
       dy = -dy
-    } else if (y + dy > canvas.height - 2 * ballRadius) {
+    } else if (y + dy > canvas.height - ballRadius) {
       if (x > paddleX && x < paddleX + paddleWidth) {
         snd2.play()
         dy = -dy
-      } else if (y + dy > canvas.height - ballRadius) {
-        alert('GAME OVER')
-        document.location.reload()
-        paused = !paused
+      } else {
+        gameEnd = true
       }
     }
     //wall collision for x

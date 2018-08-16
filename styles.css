@@ -4,7 +4,16 @@
 }
 
 #myCanvas {
-  background-color: #eee;
-  display: block;
-  margin: 100px auto;
+  background-color: #000000;
+  position: relative;
+  z-index: 3;
+  margin: 313px 240px;
+}
+
+#arcade {
+  background-image: url('./arcade1.png');
+  background-repeat: no-repeat;
+  width: 960px;
+  height: 1500px;
+  margin: 10px auto;
 }
