@@ -31,6 +31,16 @@ var level = 1
 var maxLevel = 5
 var count = 0
 const colors = ['red', 'yellow', 'green', 'pink', 'orange', 'purple', 'white']
+let scoreBoard = []
+
+fetch('http://localhost:5000/api/items')
+  .then(res => {
+    return res.json()
+  })
+  .then(res => {
+    console.log(res)
+    scoreBoard = res
+  })
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
@@ -181,6 +191,23 @@ function drawStartScreen() {
   // startButton()
 }
 
+function drawScoreBoard() {
+  let y = 320
+  let position = 1
+  scoreBoard.map(score => {
+    ctx.fillStyle = 'white'
+    ctx.font = '30px Arial'
+
+    ctx.fillText('Leaderboard Scores:', 80, 250)
+    ctx.font = '24px Arial'
+
+    ctx.fillText(position + '. ' + score.name, 140, y)
+    ctx.fillText(score.score, 250, y)
+    y += 30
+    position++
+  })
+}
+
 function drawGameEndScreen() {
   ctx.beginPath()
   ctx.rect(0, 0, canvas.width, canvas.height)
@@ -190,8 +217,9 @@ function drawGameEndScreen() {
   ctx.fillStyle = 'white'
   ctx.fillText('Game End', 125, 150)
   ctx.font = '20px Arial'
-  ctx.fillText('Final Score = ' + (10 * score - Math.round(time / 60)), 35, 190)
-  // startButton()
+  ctx.fillText('Final Score = ' + (5 * score - Math.round(time / 60)), 170, 190)
+  drawScoreBoard()
+
   setTimeout(function() {
     document.location.reload()
   }, 5000)
