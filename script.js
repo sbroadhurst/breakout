@@ -137,21 +137,21 @@ function collisionDetection() {
 }
 
 function drawScore() {
-  ctx.font = '16px Arial'
-  ctx.fillStyle = 'blue'
-  ctx.fillText('Score:' + score, 10, 20)
+  ctx.font = '24px Verdana'
+  ctx.strokeStyle = 'white'
+  ctx.strokeText('Score:' + score, 10, 20)
 }
 
 function drawTime(time) {
-  ctx.font = '16px Arial'
-  ctx.fillStyle = 'blue'
-  ctx.fillText('Time:' + Math.round(time) + 's', 80, 20)
+  ctx.font = '24px Verdana'
+  ctx.strokeStyle = 'white'
+  ctx.strokeText('Time:' + Math.round(time) + 's', 190, 20)
 }
 
 function drawLevel() {
-  ctx.font = '16px Arial'
-  ctx.fillStyle = 'blue'
-  ctx.fillText('Level:' + level, 210, 20)
+  ctx.font = '24px Verdana'
+  ctx.strokeStyle = 'white'
+  ctx.strokeText('Level:' + level, 370, 20)
 }
 
 // function startButton() {
@@ -176,7 +176,7 @@ function drawStartScreen() {
   ctx.fillStyle = 'white'
   ctx.fillText('Breakout!', 125, 150)
   ctx.font = '20px Arial'
-  ctx.fillText('Press Enter to start or pause the game', 35, 190)
+  ctx.fillText('Press ENTER to start or pause the game', 55, 190)
 
   // startButton()
 }
