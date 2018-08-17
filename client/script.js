@@ -217,7 +217,7 @@ function drawGameEndScreen() {
   ctx.fillStyle = 'white'
   ctx.fillText('Game End', 125, 150)
   ctx.font = '20px Arial'
-  ctx.fillText('Final Score = ' + (5 * score - Math.round(time / 60)), 170, 190)
+  ctx.fillText('Final Score = ' + (10 * score - Math.round(time / 60)), 170, 190)
   drawScoreBoard()
 
   setTimeout(function() {
