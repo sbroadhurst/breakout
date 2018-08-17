@@ -198,7 +198,7 @@ function drawScoreBoard() {
     ctx.fillStyle = 'white'
     ctx.font = '30px Arial'
 
-    ctx.fillText('Leaderboard Scores:', 80, 250)
+    ctx.fillText('Leaderboard Scores:', 105, 250)
     ctx.font = '24px Arial'
 
     ctx.fillText(position + '. ' + score.name, 140, y)
