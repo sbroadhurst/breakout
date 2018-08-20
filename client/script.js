@@ -148,21 +148,21 @@ function collisionDetection() {
 }
 
 function drawScore() {
-  ctx.font = '24px Verdana'
-  ctx.strokeStyle = 'white'
-  ctx.strokeText('Score:' + score, 10, 20)
+  ctx.font = '30px ArcadeClassic'
+  ctx.fillStyle = 'white'
+  ctx.fillText('Score: ' + score, 10, 20)
 }
 
 function drawTime(time) {
-  ctx.font = '24px Verdana'
-  ctx.strokeStyle = 'white'
-  ctx.strokeText('Time:' + Math.round(time) + 's', 190, 20)
+  ctx.font = '30px ArcadeClassic'
+  ctx.fillStyle = 'white'
+  ctx.fillText('Time: ' + Math.round(time) + 's', 190, 20)
 }
 
 function drawLevel() {
-  ctx.font = '24px Verdana'
-  ctx.strokeStyle = 'white'
-  ctx.strokeText('Level:' + level, 370, 20)
+  ctx.font = '30px ArcadeClassic'
+  ctx.fillStyle = 'white'
+  ctx.fillText('Level: ' + level, 360, 20)
 }
 
 // function startButton() {
@@ -181,12 +181,12 @@ function drawLevel() {
 function drawStartScreen() {
   ctx.beginPath()
   ctx.rect(0, 0, canvas.width, canvas.height)
-  ctx.fillStyle = 'blue'
+  ctx.fillStyle = 'black'
   ctx.fill()
-  ctx.font = '50px Arial'
+  ctx.font = '80px ArcadeClassic'
   ctx.fillStyle = 'white'
-  ctx.fillText('Breakout!', 125, 150)
-  ctx.font = '20px Arial'
+  ctx.fillText('Breakout!', 55, 150)
+  ctx.font = '20px ArcadeClassic'
   ctx.fillText('Press ENTER to start or pause the game', 55, 190)
 
   // startButton()
@@ -197,12 +197,12 @@ function drawScoreBoard() {
   let position = 1
   scoreBoard.map(score => {
     ctx.fillStyle = 'white'
-    ctx.font = '30px Arial'
+    ctx.font = '30px ArcadeClassic'
 
     ctx.fillText('Leaderboard Scores:', 105, 250)
-    ctx.font = '24px Arial'
+    ctx.font = '24px ArcadeClassic'
 
-    ctx.fillText(position + '. ' + score.name, 140, y)
+    ctx.fillText(position + '.  ' + score.name, 140, y)
     ctx.fillText(score.score, 250, y)
     y += 30
     position++
@@ -211,7 +211,7 @@ function drawScoreBoard() {
 
 function drawCountDown() {
   ctx.fillStyle = 'white'
-  ctx.font = '20px Arial'
+  ctx.font = '20px ArcadeClassic'
   ctx.fillText(Math.round(countDown / 60), 440, 620)
   countDown--
 }
@@ -219,12 +219,12 @@ function drawCountDown() {
 function drawGameEndScreen() {
   ctx.beginPath()
   ctx.rect(0, 0, canvas.width, canvas.height)
-  ctx.fillStyle = 'blue'
+  ctx.fillStyle = 'black'
   ctx.fill()
-  ctx.font = '50px Arial'
+  ctx.font = '50px ArcadeClassic'
   ctx.fillStyle = 'white'
-  ctx.fillText('Game End', 125, 150)
-  ctx.font = '20px Arial'
+  ctx.fillText('Game End', 145, 150)
+  ctx.font = '20px ArcadeClassic'
   ctx.fillText('Final Score = ' + (10 * score - Math.round(time / 60)), 170, 190)
   drawScoreBoard()
   drawCountDown()
