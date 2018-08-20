@@ -82,7 +82,7 @@ function keyDownHandler(e) {
   if (e.key == 'ArrowRight' || e.key == 'd') {
     rightPressed = true
   }
-  if (e.code == 'Enter') {
+  if (e.code == 'Enter' && gameEnd === false) {
     paused = !paused
   } else if (e.key == 'ArrowLeft' || e.key == 'a') {
     leftPressed = true
@@ -220,6 +220,14 @@ function drawGameEndScreen() {
   ctx.fillText('Final Score = ' + (10 * score - Math.round(time / 60)), 170, 190)
   drawScoreBoard()
 
+  //// will be used for when we enter a name
+  document.addEventListener('keydown', function(evt) {
+    console.log(evt)
+    if (evt.keyCode < 65 || evt.keyCode > 90) {
+      evt.preventDefault()
+    }
+  })
+  ////
   setTimeout(function() {
     document.location.reload()
   }, 5000)
