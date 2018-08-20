@@ -226,7 +226,7 @@ function drawGameEndScreen() {
   ctx.fillText('Game End', 145, 150)
   ctx.font = '20px ArcadeClassic'
   ctx.fillText('Final Score = ' + (10 * score - Math.round(time / 60)), 170, 190)
-  drawScoreBoard()
+  //drawScoreBoard()
   drawCountDown()
 
   //// will be used for when we enter a name
