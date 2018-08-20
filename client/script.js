@@ -30,6 +30,7 @@ var gameEnd = false
 var level = 1
 var maxLevel = 5
 var count = 0
+var countDown = 5 * 60
 const colors = ['red', 'yellow', 'green', 'pink', 'orange', 'purple', 'white']
 let scoreBoard = []
 
@@ -208,6 +209,13 @@ function drawScoreBoard() {
   })
 }
 
+function drawCountDown() {
+  ctx.fillStyle = 'white'
+  ctx.font = '20px Arial'
+  ctx.fillText(Math.round(countDown / 60), 440, 620)
+  countDown--
+}
+
 function drawGameEndScreen() {
   ctx.beginPath()
   ctx.rect(0, 0, canvas.width, canvas.height)
@@ -219,6 +227,7 @@ function drawGameEndScreen() {
   ctx.font = '20px Arial'
   ctx.fillText('Final Score = ' + (10 * score - Math.round(time / 60)), 170, 190)
   drawScoreBoard()
+  drawCountDown()
 
   //// will be used for when we enter a name
   document.addEventListener('keydown', function(evt) {
@@ -227,9 +236,11 @@ function drawGameEndScreen() {
       evt.preventDefault()
     }
   })
+
   ////
   setTimeout(function() {
     document.location.reload()
+    countDown--
   }, 5000)
 }
 
