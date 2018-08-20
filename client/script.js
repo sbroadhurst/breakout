@@ -34,14 +34,14 @@ var countDown = 5 * 60
 const colors = ['red', 'yellow', 'green', 'pink', 'orange', 'purple', 'white']
 let scoreBoard = []
 
-fetch('http://localhost:5000/api/items')
-  .then(res => {
-    return res.json()
-  })
-  .then(res => {
-    console.log(res)
-    scoreBoard = res
-  })
+// fetch('http://localhost:5000/api/items')
+//   .then(res => {
+//     return res.json()
+//   })
+//   .then(res => {
+//     console.log(res)
+//     scoreBoard = res
+//   })
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
