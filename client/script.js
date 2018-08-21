@@ -37,14 +37,14 @@ var countDown = 5 * 60
 const colors = ['red', 'yellow', 'green', 'pink', 'orange', 'purple', 'white']
 let scoreBoard = []
 
-fetch('http://localhost:5000/api/items')
-  .then(res => {
-    return res.json()
-  })
-  .then(res => {
-    console.log(res)
-    scoreBoard = res
-  })
+// fetch('http://localhost:5000/api/items')
+//   .then(res => {
+//     return res.json()
+//   })
+//   .then(res => {
+//     console.log(res)
+//     scoreBoard = res
+//   })
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
@@ -231,7 +231,7 @@ function drawGameEndScreen() {
   ctx.fillText('Final Score = ' + (10 * score - Math.round(time / 60)), 170, 190)
   ctx.fillText('Enter name: ', 170, 215)
   nameBox.style.display = 'block'
-  drawScoreBoard()
+  // drawScoreBoard()
   drawCountDown()
 
   //// will be used for when we enter a name
