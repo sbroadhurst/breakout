@@ -242,10 +242,14 @@ function drawGameEndScreen() {
     }
   })
 
-  ////
-  setTimeout(function() {
+  if (countDown === 0) {
     document.location.reload()
-  }, 5000)
+  }
+
+  ////
+  // setTimeout(function() {
+  //   document.location.reload()
+  // }, 5000)
 }
 
 function draw() {
