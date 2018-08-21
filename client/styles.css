@@ -22,3 +22,16 @@
   font-family: 'ArcadeClassic';
   src: url('ARCADECLASSIC.TTF');
 }
+
+#nameBox {
+  width: 60px;
+  height: 20px;
+  z-index: 5;
+  position: absolute;
+  background-color: #000000;
+  left: 580px;
+  top: 520px;
+  font-size: 30px;
+  font-family: 'ArcadeClassic';
+  color: white;
+}
