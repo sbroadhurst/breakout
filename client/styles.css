@@ -5,7 +5,7 @@
 
 #myCanvas {
   background-color: #000000;
-  position: relative;
+  position: absolute;
   z-index: 3;
   margin: 313px 240px;
 }
@@ -16,6 +16,7 @@
   width: 960px;
   height: 1500px;
   margin: 10px auto;
+  position: relative;
 }
 
 @font-face {
@@ -27,10 +28,10 @@
   width: 60px;
   height: 20px;
   z-index: 5;
-  position: absolute;
+  position: relative;
   background-color: #000000;
-  left: 580px;
-  top: 520px;
+  top: 510px;
+  left: 520px;
   font-size: 30px;
   font-family: 'ArcadeClassic';
   color: white;
