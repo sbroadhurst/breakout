@@ -242,7 +242,7 @@ function drawStartScreen() {
   ctx.fillText('Breakout!', 55, 150)
   ctx.font = '20px ArcadeClassic'
   ctx.fillText('Press ENTER to start or pause the game', 55, 190)
-
+  drawScoreBoard()
   // startButton()
 }
 
