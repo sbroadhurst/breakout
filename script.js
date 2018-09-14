@@ -2,7 +2,7 @@ var canvas = document.getElementById('myCanvas')
 var ctx = canvas.getContext('2d')
 var nameBox = document.getElementById('nameBox')
 nameBox.style.display = 'none'
-name.maxLength = '3'
+nameBox.maxLength = '3'
 
 var min = -200
 var max = 200
@@ -33,18 +33,72 @@ var gameEnd = false
 var level = 1
 var maxLevel = 5
 var count = 0
-var countDown = 5 * 60
+var countDown = 10 * 60
 const colors = ['red', 'yellow', 'green', 'pink', 'orange', 'purple', 'white']
 let scoreBoard = []
+var database = firebase.database()
+var ref = database
+  .ref('breakout')
+  .orderByChild('score')
+  .limitToFirst(10)
 
-fetch('http://localhost:5000/api/items')
-  .then(res => {
-    return res.json()
+// ref.on(
+//   'value',
+//   data => {
+//     scoreBoard = sortData(data.val(), 'order')
+//     console.log(scoreBoard)
+//   },
+//   err => {}
+// )
+
+function sortData(data, attr) {
+  var arr = []
+  for (var prop in data) {
+    if (data.hasOwnProperty(prop)) {
+      var obj = {}
+      obj[prop] = data[prop]
+      obj.tempSortName = data[prop][attr]
+      arr.push(obj)
+    }
+  }
+
+  arr.sort(function(a, b) {
+    var at = a.tempSortName,
+      bt = b.tempSortName
+    return at > bt ? 1 : at < bt ? -1 : 0
   })
-  .then(res => {
-    console.log(res)
-    scoreBoard = res
-  })
+
+  var result = []
+  for (var i = 0, l = arr.length; i < l; i++) {
+    var obj = arr[i]
+    delete obj.tempSortName
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(prop)) {
+        var id = prop
+      }
+    }
+    var item = obj[id]
+    result.push(item)
+  }
+  return result
+}
+
+function gotData(data) {
+  //scoreBoard = data.val()
+  scoreBoard = sortData(data.val(), 'order')
+}
+
+function errData(err) {
+  console.log('Error: ' + err)
+}
+// fetch('http://localhost:5000/api/items')
+//   .then(res => {
+//     return res.json()
+//   })
+//   .then(res => {
+//     console.log(res)
+//     scoreBoard = res
+//   })
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
@@ -177,9 +231,6 @@ function drawLevel() {
 //   btn.style.marginTop = '25px'
 //   btn.onclick = unpause
 // }
-// function unpause() {
-//   window['paused'] = !paused
-// }
 
 function drawStartScreen() {
   ctx.beginPath()
@@ -196,26 +247,32 @@ function drawStartScreen() {
 }
 
 function drawScoreBoard() {
+  ref.on('value', gotData, errData)
+
   let y = 320
   let position = 1
-  scoreBoard.map(score => {
+  var keys = Object.keys(scoreBoard)
+  for (var i = 0; i < keys.length; i++) {
+    var k = keys[i]
+    var name = scoreBoard[k].name
+    var score = scoreBoard[k].score
     ctx.fillStyle = 'white'
     ctx.font = '30px ArcadeClassic'
 
     ctx.fillText('Leaderboard Scores:', 105, 250)
     ctx.font = '24px ArcadeClassic'
 
-    ctx.fillText(position + '.  ' + score.name, 140, y)
-    ctx.fillText(score.score, 250, y)
+    ctx.fillText(position + '.  ' + name, 140, y)
+    ctx.fillText(score, 250, y)
     y += 30
     position++
-  })
+  }
 }
 
 function drawCountDown() {
   ctx.fillStyle = 'white'
-  ctx.font = '20px ArcadeClassic'
-  ctx.fillText(Math.round(countDown / 60), 440, 620)
+  ctx.font = '40px ArcadeClassic'
+  ctx.fillText(Math.round(countDown / 60), 400, 120)
   countDown--
 }
 
@@ -236,20 +293,40 @@ function drawGameEndScreen() {
 
   //// will be used for when we enter a name
   document.addEventListener('keydown', function(evt) {
-    console.log(evt)
     if (evt.keyCode < 65 || evt.keyCode > 90) {
       evt.preventDefault()
     }
   })
 
   if (countDown === 0) {
+    var data = {
+      name: nameBox.value,
+      score: 10 * score - Math.round(time / 60),
+      order: -1 * (10 * score - Math.round(time / 60))
+    }
+
+    database
+      .ref()
+      .child('breakout')
+      .push(data)
+
+    // fetch('http://localhost:5000/api/items', {
+    //   mode: 'no-cors',
+    //   method: 'POST',
+    //   body: data
+
+    //   // headers: {
+    //   //   'Content-type': 'application.json',
+    //   //   'Access-Control-Expose-Headers': 'Access-Control-Allow-Origin',
+    //   //   'Access-Control-Allow-Origin': '*'
+    //   // }
+    // })
+    //   .then(res => res)
+    //   .then(response => console.log('Success: ', response))
+    //   .catch(error => console.error('Error: ', error))
+
     document.location.reload()
   }
-
-  ////
-  // setTimeout(function() {
-  //   document.location.reload()
-  // }, 5000)
 }
 
 function draw() {

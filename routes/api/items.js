@@ -20,10 +20,14 @@ router.get('/', (req, res) => {
 // @desc create an item
 // @access Public
 router.post('/', (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+
   const newItem = new Item({
     name: req.body.name,
     score: req.body.score
   })
+  console.log(newItem)
   newItem.save().then(item => res.json(item))
 })
 

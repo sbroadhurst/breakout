@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset="utf-8">
+  <title>Breakout Game</title>
+  <link rel='stylesheet' href="styles.css">
+</head>
+
+<body>
+  <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-database.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCAcFLo5bKDhF7C4zAlXET-MzgaNaufv6M",
+      authDomain: "breakout-7da79.firebaseapp.com",
+      databaseURL: "https://breakout-7da79.firebaseio.com",
+      projectId: "breakout-7da79",
+      storageBucket: "breakout-7da79.appspot.com",
+      messagingSenderId: "343490549392"
+    };
+    firebase.initializeApp(config);
+  </script>
+
+
+
+  <div id='arcade'>
+    <canvas id='myCanvas' width="480px" height="640px"></canvas>
+    <input type="text" id="nameBox" />
+  </div>
+
+  <script src="script.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js'></script>
+</body>
+
+</html>
