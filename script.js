@@ -118,6 +118,17 @@ function makeBricks() {
 document.addEventListener('keydown', keyDownHandler)
 document.addEventListener('keyup', keyUpHandler)
 
+window.addEventListener(
+  'keydown',
+  function(e) {
+    // space and arrow keys
+    if ([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+      e.preventDefault()
+    }
+  },
+  false
+)
+
 function drawBricks() {
   for (c = 0; c < brickColumnCount; c++) {
     for (r = 0; r < brickRowCount; r++) {
