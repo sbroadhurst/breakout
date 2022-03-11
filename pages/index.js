@@ -31,7 +31,7 @@ function HomePage() {
 
       <div id="arcade">
         <canvas id="myCanvas" width="480px" height="640px"></canvas>
-        <input type="text" id="nameBox" autofocus />
+        <input type="text" id="nameBox" autoFocus />
       </div>
 
       <Script type="text/javascript" src="script.js" strategy="afterInteractive"></Script>
